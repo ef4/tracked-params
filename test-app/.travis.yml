@@ -1,0 +1,25 @@
+---
+language: node_js
+node_js:
+  - "14"
+
+dist: xenial
+
+addons:
+  chrome: stable
+
+cache:
+  directories:
+    - $HOME/.npm
+
+env:
+  global:
+    # See https://github.com/ember-cli/ember-cli/blob/master/docs/build-concurrency.md for details.
+    - JOBS=1
+
+branches:
+  only:
+    - master
+
+script:
+  - npm test
