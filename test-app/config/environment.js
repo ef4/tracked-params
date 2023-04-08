@@ -5,7 +5,14 @@ module.exports = function (environment) {
     modulePrefix: 'test-app',
     environment,
     rootURL: '/',
-    locationType: 'history',
+
+    // activates support for the tracked-search-params addon
+    locationType: 'tracked-search-params',
+
+    // when using a custom locationType, ember-cli needs this to keep its
+    // history support middleware enabled.
+    historySupportMiddleware: true,
+
     EmberENV: {
       EXTEND_PROTOTYPES: false,
       FEATURES: {

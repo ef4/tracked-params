@@ -39,6 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "concurrently": "^7.2.1",
+    "ember-source": "v5.0.0-beta.1",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -61,7 +62,9 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "app-js": {}
+    "app-js": {
+      "./locations/tracked-search-params.js": "./dist/_app_/locations/tracked-search-params.js"
+    }
   },
   "exports": {
     ".": "./dist/index.js",

@@ -52,7 +52,7 @@
     "ember-modifier": "^4.1.0",
     "ember-qunit": "^6.2.0",
     "ember-resolver": "^10.0.0",
-    "ember-source": "~4.12.0",
+    "ember-source": "v5.0.0-beta.1",
     "ember-template-lint": "^5.7.2",
     "ember-try": "^2.0.0",
     "eslint": "^8.37.0",
@@ -70,6 +70,7 @@
     "stylelint-config-standard": "^32.0.0",
     "stylelint-prettier": "^3.0.0",
     "tracked-built-ins": "^3.1.1",
+    "tracked-search-params": "workspace:*",
     "typescript": "^4.7.4",
     "webpack": "^5.78.0"
   },

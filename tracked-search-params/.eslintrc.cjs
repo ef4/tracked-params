@@ -25,7 +25,8 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
       ],
       rules: {
-        // Add any custom rules here
+        'prefer-const': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
       },
     },
     // node files
