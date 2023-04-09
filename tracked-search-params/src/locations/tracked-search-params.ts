@@ -1,7 +1,7 @@
 import HistoryLocation from '@ember/routing/history-location';
 import type { UpdateCallback } from '@ember/routing/location';
 import { getOwner } from '@ember/owner';
-import { TrackedParam } from '../tracked-param';
+import { TrackedParam, TrackedParamOpts } from '../tracked-param';
 
 export default class TrackedSearchParamsLocation extends HistoryLocation {
   constructor(owner: object) {
@@ -42,7 +42,12 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
       }
     }
     for (let [k, v] of this.liveParams) {
-      url.searchParams.set(k, v.serializedValue);
+      let serial = v.serializedValue;
+      if (serial === '' && !v.showWhenEmpty) {
+        url.searchParams.delete(k);
+      } else {
+        url.searchParams.set(k, serial);
+      }
     }
   }
 
@@ -59,9 +64,6 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
   initState() {
     // https://github.com/emberjs/ember.js/pull/20434
     super.initState!();
-
-    // initialize our internalSearchParams from the URL
-    this.getURL();
   }
 
   onUpdateURL(callback: UpdateCallback) {
@@ -71,7 +73,11 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
     });
   }
 
-  activateParam(key: string, initializer: (() => any) | undefined) {
+  activateParam<T>(
+    key: string,
+    initializer: (() => T) | undefined,
+    opts: TrackedParamOpts<T>
+  ): TrackedParam<T> {
     if (this.liveParams.has(key)) {
       throw new Error(
         `multiple trackedSearchParam decorators are trying to control the search param "${key}"`
@@ -87,6 +93,15 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
     // from the URL, rather than its own initializer
     if (this.unclaimedParams?.has(key)) {
       value = this.unclaimedParams.get(key)!;
+      if (opts.validate && !opts.validate(value)) {
+        // failed validation means we're ignoring the preexisting value in the
+        // URL as if it wasn't there.
+        value = initializer?.();
+      } else {
+        if (opts.deserialize) {
+          value = opts.deserialize(value);
+        }
+      }
       this.unclaimedParams.delete(key);
     } else {
       value = initializer?.();
@@ -95,7 +110,8 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
     let tp = new TrackedParam(
       value,
       () => this.writeSearchParams(),
-      (self) => this.removeParam(self)
+      (self) => this.removeParam(self),
+      opts
     );
     this.liveParams.set(key, tp);
     this.setURL(url);

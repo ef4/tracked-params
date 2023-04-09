@@ -6,7 +6,8 @@ export class TrackedParam<T = unknown> {
   constructor(
     value: T,
     private onChange: () => void,
-    private onDestroy: (tp: TrackedParam<T>) => void
+    private onDestroy: (tp: TrackedParam<T>) => void,
+    private opts: TrackedParamOpts<T>
   ) {
     this.internalValue = value;
   }
@@ -25,6 +26,21 @@ export class TrackedParam<T = unknown> {
   }
 
   get serializedValue(): string {
-    return String(this.internalValue);
+    if (this.opts?.serialize) {
+      return this.opts.serialize(this.internalValue);
+    } else {
+      return String(this.internalValue);
+    }
   }
+
+  get showWhenEmpty(): boolean {
+    return this.opts.showWhenEmpty ?? false;
+  }
+}
+
+export interface TrackedParamOpts<T> {
+  serialize?(value: T): string;
+  deserialize?(value: string): T;
+  validate?(value: string): boolean;
+  showWhenEmpty?: boolean;
 }
