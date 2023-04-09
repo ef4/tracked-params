@@ -1,19 +1,14 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
-// import type TrackedSearchParams from 'tracked-search-params/services/tracked-search-params';
-import type TrackedSearchParamsLocation from 'tracked-search-params/locations/tracked-search-params';
-import type Router from '@ember/routing/router';
+import { on } from '@ember/modifier';
+import { trackedSearchParam } from 'tracked-search-params';
 
 export default class Example extends Component {
-//  @service declare trackedSearchParams: TrackedSearchParams;
-  @service declare router: Router;
+  @trackedSearchParam enabled = false;
 
-  get message() {
-    let tl = this.router.location as unknown as TrackedSearchParamsLocation;
-    return tl.internalSearchParams.get('x');
-  }
+  toggleEnabled = () => { this.enabled = !this.enabled }
 
   <template>
-    hello world {{this.message}}
+    <input type="checkbox" checked={{this.enabled}} {{on "click" this.toggleEnabled}} />
+    {{#if this.enabled}}Enabled!{{/if}}
   </template>
 }

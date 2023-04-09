@@ -1,3 +1,4 @@
 {
-  "glint.libraryPath": "./test-app"
+  "glint.libraryPath": "./test-app",
+  "editor.formatOnSave": true
 }
