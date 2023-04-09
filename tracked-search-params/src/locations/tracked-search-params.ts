@@ -1,18 +1,21 @@
 import HistoryLocation from '@ember/routing/history-location';
 import type { UpdateCallback } from '@ember/routing/location';
 
-export default class extends HistoryLocation {
-  constructor() {
-    super();
+export default class TrackedSearchParamsLocation extends HistoryLocation {
+  constructor(owner: object) {
+    super(owner);
+
+    // HistoryLocation is a classic ember-object based class, so it has init
+    // instead of a meaninful constructor:
     this.init();
   }
 
-  private internalSearchParams: [string, string][] = [];
+  internalSearchParams: Map<string, string> = new Map();
 
   getURL() {
     let realURL = super.getURL();
     let u = new URL(realURL, window.location.href);
-    this.internalSearchParams = [...u.searchParams];
+    this.internalSearchParams = new Map([...u.searchParams]);
     return u.pathname;
   }
 
