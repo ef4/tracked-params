@@ -8,11 +8,7 @@ export default class TrackedParamsHistoryLocation
 {
   constructor(owner: object) {
     super(owner);
-    setLocation(this, this);
-
-    // HistoryLocation is a classic ember-object based class, so it has init
-    // instead of a meaninful constructor:
-    this.init();
+    setLocation(this);
   }
 
   // as we initialize, we will read all the search params out of the URL. They

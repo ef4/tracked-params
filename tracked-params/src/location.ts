@@ -25,15 +25,10 @@ export function getLocation(
   return locations.get(owner);
 }
 
-export function setLocation(
-  ownedObject: object,
-  location: TrackedParamsLocation
-): void {
-  let owner = getOwner(ownedObject);
+export function setLocation(location: TrackedParamsLocation): void {
+  let owner = getOwner(location);
   if (!owner) {
-    throw new Error(
-      `trackedParams can only be used on objects that have an owner`
-    );
+    throw new Error(`bug: expected location to have an owner`);
   }
   locations.set(owner, location);
 }
