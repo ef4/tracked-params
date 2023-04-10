@@ -1,6 +1,6 @@
 import type Location from '@ember/routing/location';
 import { TrackedParam, TrackedParamOpts } from './tracked-param';
-import Owner, { getOwner } from '@ember/owner';
+import { getOwner } from '@ember/owner';
 import { UpdateCallback } from '@ember/routing/location';
 
 export class TrackedParamsLocation implements Location {
@@ -12,7 +12,11 @@ export class TrackedParamsLocation implements Location {
 
   private liveParams: Map<string, TrackedParam> = new Map();
 
-  constructor(owner: Owner, innerLocationType: string) {
+  constructor(owning: object, innerLocationType: string) {
+    let owner = getOwner(owning);
+    if (!owner) {
+      throw new Error(`bug: TrackedParamsLocation expected to find an owner`);
+    }
     this.innerLocation = owner.lookup(`location:${innerLocationType}`)!;
     locations.set(owner, this);
   }
@@ -29,33 +33,32 @@ export class TrackedParamsLocation implements Location {
   }
 
   setURL(url: string) {
-    let u = new URL(url, window.location.href);
-    this.addSearchParams(u);
-    this.innerLocation.setURL(u.pathname + u.search);
+    this.innerLocation.setURL(this.addSearchParams(url));
   }
 
-  private addSearchParams(url: URL): void {
+  private addSearchParams(url: string): string {
+    let u = new URL(url, window.location.href);
     if (this.unclaimedParams) {
       for (let [k, v] of this.unclaimedParams) {
-        url.searchParams.set(k, v);
+        u.searchParams.set(k, v);
       }
     }
     for (let [k, v] of this.liveParams) {
       let serial = v.serializedValue;
       if (serial === '' && !v.showWhenEmpty) {
-        url.searchParams.delete(k);
+        u.searchParams.delete(k);
       } else {
-        url.searchParams.set(k, serial);
+        u.searchParams.set(k, serial);
       }
     }
+    return u.pathname + u.search;
   }
 
   replaceURL(url: string) {
-    url = this.formatURL(url);
     if (this.innerLocation.replaceURL) {
-      return this.innerLocation.replaceURL(url);
+      return this.innerLocation.replaceURL(this.addSearchParams(url));
     } else {
-      return this.innerLocation.setURL(url);
+      return this.innerLocation.setURL(this.addSearchParams(url));
     }
   }
 
@@ -64,9 +67,7 @@ export class TrackedParamsLocation implements Location {
   }
 
   formatURL(url: string) {
-    let u = new URL(this.innerLocation.formatURL(url), window.location.href);
-    this.addSearchParams(u);
-    return u.pathname + u.search;
+    return this.innerLocation.formatURL(this.addSearchParams(url));
   }
 
   activateParam<T>(

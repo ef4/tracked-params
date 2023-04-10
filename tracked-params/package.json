@@ -69,7 +69,8 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./locations/tracked-params.js": "./dist/_app_/locations/tracked-params.js"
+      "./locations/tracked-params-hash.js": "./dist/_app_/locations/tracked-params-hash.js",
+      "./locations/tracked-params-history.js": "./dist/_app_/locations/tracked-params-history.js"
     }
   },
   "exports": {

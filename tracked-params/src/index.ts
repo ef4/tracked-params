@@ -96,3 +96,5 @@ export const trackedNumberParam = createTrackedParam({
     return !isNaN(Number(value));
   },
 });
+
+export { TrackedParamsLocation } from './location';
