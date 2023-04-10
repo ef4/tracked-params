@@ -69,8 +69,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./locations/tracked-search-params.js": "./dist/_app_/locations/tracked-search-params.js",
-      "./services/tracked-search-params.js": "./dist/_app_/services/tracked-search-params.js"
+      "./locations/tracked-search-params.js": "./dist/_app_/locations/tracked-search-params.js"
     }
   },
   "exports": {

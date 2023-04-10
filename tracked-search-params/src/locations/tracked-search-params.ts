@@ -1,5 +1,4 @@
 import HistoryLocation from '@ember/routing/history-location';
-import type { UpdateCallback } from '@ember/routing/location';
 import { getOwner } from '@ember/owner';
 import { TrackedParam, TrackedParamOpts } from '../tracked-param';
 
@@ -61,17 +60,6 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
     this.addSearchParams(u);
     return u.pathname + u.search;
   }
-  initState() {
-    // https://github.com/emberjs/ember.js/pull/20434
-    super.initState!();
-  }
-
-  onUpdateURL(callback: UpdateCallback) {
-    super.onUpdateURL((innerURL) => {
-      console.log('on update', innerURL);
-      callback(innerURL);
-    });
-  }
 
   activateParam<T>(
     key: string,
@@ -114,7 +102,7 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
       opts
     );
     this.liveParams.set(key, tp);
-    this.setURL(url);
+    this.replaceURL(url);
     return tp;
   }
 
@@ -128,7 +116,7 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
   }
 
   private writeSearchParams() {
-    this.setURL(this.getURL());
+    this.replaceURL(this.getURL());
   }
 }
 
