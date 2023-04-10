@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import { trackedBoolSearchParam } from 'tracked-search-params';
+import { trackedBoolParam } from 'tracked-params';
 
 export default class Example extends Component {
-  @trackedBoolSearchParam enabled = false;
+  @trackedBoolParam enabled = false;
 
   toggleEnabled = () => { this.enabled = !this.enabled }
 

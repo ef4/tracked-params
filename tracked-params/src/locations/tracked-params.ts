@@ -1,10 +1,10 @@
 import HistoryLocation from '@ember/routing/history-location';
 import { TrackedParam, TrackedParamOpts } from '../tracked-param';
-import { TrackedParamLocation, setLocation } from '../location';
+import { TrackedParamsLocation, setLocation } from '../location';
 
-export default class TrackedSearchParamsLocation
+export default class TrackedParamsHistoryLocation
   extends HistoryLocation
-  implements TrackedParamLocation
+  implements TrackedParamsLocation
 {
   constructor(owner: object) {
     super(owner);

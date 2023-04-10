@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { Input } from '@ember/component';
 import { on } from '@ember/modifier';
-import { trackedSearchParam, trackedNumberSearchParam } from 'tracked-search-params';
+import { trackedParam, trackedNumberParam } from 'tracked-params';
 
 export default class Example extends Component {
-  @trackedSearchParam q = '';
-  @trackedNumberSearchParam count = 42;
+  @trackedParam q = '';
+  @trackedNumberParam count = 42;
 
   updateCount = (event: any) => {
     this.count = Number(event.target.value);

@@ -53,7 +53,7 @@ function setupDecorator<T>(
   };
 }
 
-export const trackedSearchParam = babelToTSDecorator(function (
+export const trackedParam = babelToTSDecorator(function (
   target: object,
   fieldName: string,
   desc: PropertyDescriptor
@@ -73,7 +73,7 @@ export function createTrackedParam<T>(
   });
 }
 
-export const trackedBoolSearchParam = createTrackedParam({
+export const trackedBoolParam = createTrackedParam({
   serialize(value: boolean) {
     return value ? '1' : '0';
   },
@@ -85,7 +85,7 @@ export const trackedBoolSearchParam = createTrackedParam({
   },
 });
 
-export const trackedNumberSearchParam = createTrackedParam({
+export const trackedNumberParam = createTrackedParam({
   serialize(value: number) {
     return String(value);
   },

@@ -3,7 +3,7 @@ import type { TrackedParam, TrackedParamOpts } from './tracked-param';
 import { getOwner } from '@ember/owner';
 
 // This is the additional API we add to Ember's Location interface.
-export interface TrackedParamLocation extends Location {
+export interface TrackedParamsLocation extends Location {
   activateParam<T>(
     paramName: string,
     initializer: (() => T) | undefined,
@@ -11,15 +11,15 @@ export interface TrackedParamLocation extends Location {
   ): TrackedParam<T>;
 }
 
-const locations = new WeakMap<object, TrackedParamLocation>();
+const locations = new WeakMap<object, TrackedParamsLocation>();
 
 export function getLocation(
   ownedObject: object
-): TrackedParamLocation | undefined {
+): TrackedParamsLocation | undefined {
   let owner = getOwner(ownedObject);
   if (!owner) {
     throw new Error(
-      `trackedSearchParams decorator can only be used on objects that have an owner`
+      `trackedParams can only be used on objects that have an owner`
     );
   }
   return locations.get(owner);
@@ -27,12 +27,12 @@ export function getLocation(
 
 export function setLocation(
   ownedObject: object,
-  location: TrackedParamLocation
+  location: TrackedParamsLocation
 ): void {
   let owner = getOwner(ownedObject);
   if (!owner) {
     throw new Error(
-      `trackedSearchParams decorator can only be used on objects that have an owner`
+      `trackedParams can only be used on objects that have an owner`
     );
   }
   locations.set(owner, location);

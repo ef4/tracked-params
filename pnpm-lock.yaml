@@ -64,7 +64,7 @@ importers:
       stylelint-config-standard: ^32.0.0
       stylelint-prettier: ^3.0.0
       tracked-built-ins: ^3.1.1
-      tracked-search-params: workspace:*
+      tracked-params: workspace:*
       typescript: ^4.7.4
       webpack: ^5.78.0
     devDependencies:
@@ -117,11 +117,11 @@ importers:
       stylelint-config-standard: 32.0.0_stylelint@15.4.0
       stylelint-prettier: 3.0.0_pz5unyfruaaajn3vnqqiy7qrai
       tracked-built-ins: 3.1.1
-      tracked-search-params: link:../tracked-search-params
+      tracked-params: link:../tracked-params
       typescript: 4.9.5
       webpack: 5.78.0
 
-  tracked-search-params:
+  tracked-params:
     specifiers:
       '@babel/core': ^7.17.0
       '@babel/plugin-proposal-class-properties': ^7.16.7

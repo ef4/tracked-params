@@ -1,5 +1,5 @@
 {
-  "name": "tracked-search-params",
+  "name": "tracked-params",
   "version": "0.0.0",
   "description": "The default blueprint for Embroider v2 addons.",
   "keywords": [
@@ -69,7 +69,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./locations/tracked-search-params.js": "./dist/_app_/locations/tracked-search-params.js"
+      "./locations/tracked-params.js": "./dist/_app_/locations/tracked-params.js"
     }
   },
   "exports": {

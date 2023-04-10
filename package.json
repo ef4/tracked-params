@@ -1,17 +1,17 @@
 {
-  "name": "tracked-search-params",
+  "name": "tracked-params",
   "version": "0.0.0",
   "private": true,
   "repository": "",
   "license": "MIT",
   "author": "",
   "scripts": {
-    "build": "pnpm --filter tracked-search-params build",
+    "build": "pnpm --filter tracked-params build",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "pnpm --filter tracked-search-params start --no-watch.clearScreen",
+    "start:addon": "pnpm --filter tracked-params start --no-watch.clearScreen",
     "start:test-app": "pnpm --filter test-app start",
     "test": "pnpm --filter '*' test"
   },
