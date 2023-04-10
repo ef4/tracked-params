@@ -8,7 +8,9 @@ export default class Example extends Component {
   toggleEnabled = () => { this.enabled = !this.enabled }
 
   <template>
-    <input data-test="enabled-input" type="checkbox" checked={{this.enabled}} {{on "click" this.toggleEnabled}} />
-    <span data-test="enabled-message">{{#if this.enabled}}Enabled!{{/if}}</span>
+    <label>
+      <input data-test="enabled-input" type="checkbox" checked={{this.enabled}} {{on "click" this.toggleEnabled}} />
+      <span data-test="enabled-message">{{#if this.enabled}}Enabled!{{/if}}</span>
+    </label>
   </template>
 }

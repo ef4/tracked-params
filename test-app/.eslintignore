@@ -1,3 +1,5 @@
+*.gts
+
 # unconventional js
 /blueprints/*/files/
 /vendor/

@@ -46,6 +46,7 @@ importers:
       ember-qunit: ^6.2.0
       ember-resolver: ^10.0.0
       ember-source: v5.0.0-beta.1
+      ember-source-channel-url: ^3.0.0
       ember-template-imports: ^3.4.2
       ember-template-lint: ^5.7.2
       ember-try: ^2.0.0
@@ -99,6 +100,7 @@ importers:
       ember-qunit: 6.2.0_v4a5eu3iehrycwv5s5w6b3wv4m
       ember-resolver: 10.0.0_okv5vxg2tvyipmwbrlovkmco24
       ember-source: 5.0.0-beta.1_t4ejifw645ylmljgvnlnoi4sum
+      ember-source-channel-url: 3.0.0
       ember-template-imports: 3.4.2
       ember-template-lint: 5.7.2
       ember-try: 2.0.0
