@@ -1,7 +1,7 @@
 import type Location from '@ember/routing/location';
 import { TrackedParam, TrackedParamOpts } from './tracked-param';
-import { getOwner } from '@ember/owner';
-import { UpdateCallback } from '@ember/routing/location';
+import { getOwner } from '@ember/application';
+import type { UpdateCallback } from '@ember/routing/location';
 
 export class TrackedParamsLocation implements Location {
   private innerLocation: Location;
