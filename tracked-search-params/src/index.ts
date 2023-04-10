@@ -1,6 +1,6 @@
 import { babelToTSDecorator } from './decorator-types';
+import { getLocation } from './location';
 import { TrackedParam, TrackedParamOpts } from './tracked-param';
-import { getLocation } from './locations/tracked-search-params';
 import { registerDestructor } from '@ember/destroyable';
 
 const trackedParams = new WeakMap<object, Map<string, TrackedParam<unknown>>>();
@@ -18,11 +18,21 @@ function setupDecorator<T>(
     }
     let trackedParam = map.get(fieldName) as TrackedParam<T> | undefined;
     if (!trackedParam) {
-      trackedParam = getLocation(obj).activateParam(
-        fieldName,
-        originalDesc.initializer,
-        opts
-      );
+      let location = getLocation(obj);
+      if (location) {
+        trackedParam = location.activateParam(
+          fieldName,
+          originalDesc.initializer,
+          opts
+        );
+      } else {
+        // tracked params intentional degrade gracefully to normal tracked
+        // properties when there is no Location support install for them.
+        trackedParam = new TrackedParam(
+          originalDesc.initializer?.() as T,
+          opts
+        );
+      }
       registerDestructor(obj, () => {
         trackedParam?.destroy();
       });

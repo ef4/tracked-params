@@ -1,10 +1,14 @@
 import HistoryLocation from '@ember/routing/history-location';
-import { getOwner } from '@ember/owner';
 import { TrackedParam, TrackedParamOpts } from '../tracked-param';
+import { TrackedParamLocation, setLocation } from '../location';
 
-export default class TrackedSearchParamsLocation extends HistoryLocation {
+export default class TrackedSearchParamsLocation
+  extends HistoryLocation
+  implements TrackedParamLocation
+{
   constructor(owner: object) {
     super(owner);
+    setLocation(this, this);
 
     // HistoryLocation is a classic ember-object based class, so it has init
     // instead of a meaninful constructor:
@@ -97,9 +101,9 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
 
     let tp = new TrackedParam(
       value,
+      opts,
       () => this.writeSearchParams(),
-      (self) => this.removeParam(self),
-      opts
+      (self) => this.removeParam(self)
     );
     this.liveParams.set(key, tp);
     this.replaceURL(url);
@@ -118,15 +122,4 @@ export default class TrackedSearchParamsLocation extends HistoryLocation {
   private writeSearchParams() {
     this.replaceURL(this.getURL());
   }
-}
-
-export function getLocation(obj: object): TrackedSearchParamsLocation {
-  let owner = getOwner(obj);
-  if (!owner) {
-    throw new Error(
-      `trackedSearchParams decorator can only be used on objects that have an owner`
-    );
-  }
-  return (owner.lookup('service:router') as any)
-    .location as TrackedSearchParamsLocation;
 }

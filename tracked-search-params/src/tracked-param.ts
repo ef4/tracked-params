@@ -5,15 +5,15 @@ export class TrackedParam<T = unknown> {
 
   constructor(
     value: T,
-    private onChange: () => void,
-    private onDestroy: (tp: TrackedParam<T>) => void,
-    private opts: TrackedParamOpts<T>
+    private opts: TrackedParamOpts<T>,
+    private onChange?: () => void,
+    private onDestroy?: (tp: TrackedParam<T>) => void
   ) {
     this.internalValue = value;
   }
 
   destroy() {
-    this.onDestroy(this);
+    this.onDestroy?.(this);
   }
 
   get value(): T {
@@ -22,7 +22,7 @@ export class TrackedParam<T = unknown> {
 
   update(value: T): void {
     this.internalValue = value;
-    this.onChange();
+    this.onChange?.();
   }
 
   get serializedValue(): string {
