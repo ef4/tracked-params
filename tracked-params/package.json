@@ -71,7 +71,10 @@
     "app-js": {
       "./locations/tracked-params-hash.js": "./dist/_app_/locations/tracked-params-hash.js",
       "./locations/tracked-params-history.js": "./dist/_app_/locations/tracked-params-history.js"
-    }
+    },
+    "externals": [
+      "@ember/owner"
+    ]
   },
   "exports": {
     ".": "./dist/index.js",
