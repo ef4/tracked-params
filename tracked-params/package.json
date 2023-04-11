@@ -76,7 +76,8 @@
     "main": "addon-main.cjs",
     "app-js": {
       "./locations/tracked-params-hash.js": "./dist/_app_/locations/tracked-params-hash.js",
-      "./locations/tracked-params-history.js": "./dist/_app_/locations/tracked-params-history.js"
+      "./locations/tracked-params-history.js": "./dist/_app_/locations/tracked-params-history.js",
+      "./locations/tracked-params-none.js": "./dist/_app_/locations/tracked-params-none.js"
     },
     "externals": [
       "@ember/owner"

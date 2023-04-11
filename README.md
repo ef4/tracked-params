@@ -141,10 +141,12 @@ In integration tests, components are rendered in isolation and there is not nece
 
 Acceptance tests typically use Ember's `none` locationType. If you want to be able to `visit('/some?tracked_param=123')` in acceptance tests, change your testing `locationType` from `"none"` to `"tracked-params-none"`.
 
+**CAUTION**: `currentURL()` from `@ember/test-hepers` reflects what Ember's router sees as the URL. But we are deliberate not exposing our params to the router, because it won't understand them. So you cannot use `currentURL()` to assert about your tracked params.
+
 _Possible upcoming additions_: test-support utilities so you can
 
 - optionally provide initial values to params in component integration tests
-- assert about the current values in the (notional) URL in component integration tests
+- assert about the current values of the params, both in integration and acceptance tests
 
 ## Contributing
 

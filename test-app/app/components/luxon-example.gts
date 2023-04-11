@@ -26,6 +26,6 @@ export default class Example extends Component {
 
   <template>
     <div>{{this.displayDate}}</div>
-    <button {{on "click" this.tomorrow}}>Tomorrow</button>
+    <button type="button" {{on "click" this.tomorrow}}>Tomorrow</button>
   </template>
 }

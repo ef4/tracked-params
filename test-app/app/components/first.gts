@@ -12,7 +12,7 @@ export default class Example extends Component {
   }
 
   <template>
-    <label>Q: <Input @value={{this.q}} /></label>
+    <label>Q: <Input data-test="q" @value={{this.q}} /></label>
     <label>Count: <input type="number" value={{this.count}} {{on "change" this.updateCount}} /></label>
   </template>
 }
