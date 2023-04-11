@@ -26,6 +26,7 @@ importers:
       '@glint/environment-ember-template-imports': 1.0.0-beta.4
       '@glint/template': 1.0.0-beta.4
       '@tsconfig/ember': ^2.0.0
+      '@types/luxon': ^3.3.0
       '@types/qunit': ^2.19.2
       '@types/rsvp': ^4.0.4
       '@typescript-eslint/eslint-plugin': ^5.57.1
@@ -57,6 +58,7 @@ importers:
       eslint-plugin-prettier: ^4.2.1
       eslint-plugin-qunit: ^7.3.4
       loader.js: ^4.7.0
+      luxon: ^3.3.0
       prettier: ^2.8.7
       qunit: ^2.19.4
       qunit-dom: ^2.0.0
@@ -80,6 +82,7 @@ importers:
       '@glint/environment-ember-template-imports': 1.0.0-beta.4_yes6zih3ldxixrfafgt67n6xju
       '@glint/template': 1.0.0-beta.4
       '@tsconfig/ember': 2.0.0
+      '@types/luxon': 3.3.0
       '@types/qunit': 2.19.4
       '@types/rsvp': 4.0.4
       '@typescript-eslint/eslint-plugin': 5.57.1_ee6im73s67lpei4iwnuz5bbxxm
@@ -111,6 +114,7 @@ importers:
       eslint-plugin-prettier: 4.2.1_mrzcadguhkbme6yx3ehduvsjxu
       eslint-plugin-qunit: 7.3.4_eslint@8.38.0
       loader.js: 4.7.0
+      luxon: 3.3.0
       prettier: 2.8.7
       qunit: 2.19.4
       qunit-dom: 2.0.0
@@ -2292,6 +2296,10 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 18.15.11
+    dev: true
+
+  /@types/luxon/3.3.0:
+    resolution: {integrity: sha512-uKRI5QORDnrGFYgcdAVnHvEIvEZ8noTpP/Bg+HeUzZghwinDlIS87DEenV5r1YoOF9G4x600YsUXLWZ19rmTmg==}
     dev: true
 
   /@types/mime/3.0.1:
@@ -8836,6 +8844,11 @@ packages:
 
   /lru-cache/7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
+    engines: {node: '>=12'}
+    dev: true
+
+  /luxon/3.3.0:
+    resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
     engines: {node: '>=12'}
     dev: true
 
