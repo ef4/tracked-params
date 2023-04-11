@@ -1,13 +1,19 @@
 {
   "name": "tracked-params",
-  "version": "0.0.0",
-  "description": "The default blueprint for Embroider v2 addons.",
+  "version": "0.0.1",
+  "description": "Synchronize state with the URL's searchParams",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "query params",
+    "query",
+    "search",
+    "params",
+    "url",
+    "routing"
   ],
-  "repository": "",
+  "repository": "https://github.com/ef4/tracked-params",
   "license": "MIT",
-  "author": "",
+  "author": "Edward Faulkner <edward@eaf4.com>",
   "files": [
     "addon-main.cjs",
     "dist"
