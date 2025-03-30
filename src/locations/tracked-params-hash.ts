@@ -1,4 +1,4 @@
-import { TrackedParamsLocation } from '..';
+import { TrackedParamsLocation } from '../index.ts';
 
 export default {
   create(owning: object): TrackedParamsLocation {

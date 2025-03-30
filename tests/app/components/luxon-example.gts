@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { createTrackedParam } from 'tracked-params';
+import { createTrackedParam } from '../../../src/index.ts';
 import { DateTime } from 'luxon';
 import { on } from '@ember/modifier';
 
@@ -22,7 +22,9 @@ export default class Example extends Component {
     return this.start.toLocaleString(DateTime.DATETIME_MED);
   }
 
-  tomorrow = () => { this.start = this.start.plus({ days: 1 }) }
+  tomorrow = () => {
+    this.start = this.start.plus({ days: 1 });
+  };
 
   <template>
     <div>{{this.displayDate}}</div>

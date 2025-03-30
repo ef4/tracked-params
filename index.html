@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>memory-scroll Tests</title>
+    <title>tracked-params Tests</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
@@ -24,7 +24,7 @@
 
     <script type="module">
       import { start } from "./tests/test-helper.ts";
-      import.meta.glob("./tests/**/*.{js,gjs,gts}", { eager: true });
+      import.meta.glob("./tests/**/*.{js,ts,gjs,gts}", { eager: true });
       start();
     </script>
   </body>

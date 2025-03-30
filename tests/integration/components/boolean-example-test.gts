@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import BooleanExample from 'test-app/components/boolean-example';
+import BooleanExample from '../../app/components/boolean-example';
 
 module('Integration | Component | boolean-example', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,6 @@
-import { babelToTSDecorator } from './decorator-types';
-import { getLocation } from './location';
-import { TrackedParam, TrackedParamOpts } from './tracked-param';
+import { babelToTSDecorator } from './decorator-types.ts';
+import { getLocation } from './location.ts';
+import { TrackedParam, TrackedParamOpts } from './tracked-param.ts';
 import { registerDestructor } from '@ember/destroyable';
 
 const trackedParams = new WeakMap<object, Map<string, TrackedParam<unknown>>>();
@@ -8,7 +8,7 @@ const trackedParams = new WeakMap<object, Map<string, TrackedParam<unknown>>>();
 function setupDecorator<T>(
   opts: TrackedParamOpts<T>,
   fieldName: string,
-  originalDesc: PropertyDescriptor & { initializer?: () => T }
+  originalDesc: PropertyDescriptor & { initializer?: () => T },
 ) {
   function getTrackedParam(obj: object): TrackedParam<T> {
     let map = trackedParams.get(obj);
@@ -23,14 +23,14 @@ function setupDecorator<T>(
         trackedParam = location.activateParam(
           fieldName,
           originalDesc.initializer,
-          opts
+          opts,
         );
       } else {
         // tracked params intentional degrade gracefully to normal tracked
         // properties when there is no Location support install for them.
         trackedParam = new TrackedParam(
           originalDesc.initializer?.() as T,
-          opts
+          opts,
         );
       }
       registerDestructor(obj, () => {
@@ -56,18 +56,18 @@ function setupDecorator<T>(
 export const trackedParam = babelToTSDecorator(function (
   target: object,
   fieldName: string,
-  desc: PropertyDescriptor
+  desc: PropertyDescriptor,
 ) {
   return setupDecorator({}, fieldName, desc);
 });
 
 export function createTrackedParam<T>(
-  opts: TrackedParamOpts<T>
+  opts: TrackedParamOpts<T>,
 ): PropertyDecorator {
   return babelToTSDecorator(function (
     target: object,
     fieldName: string,
-    desc: PropertyDescriptor
+    desc: PropertyDescriptor,
   ) {
     return setupDecorator(opts, fieldName, desc);
   });
@@ -97,4 +97,4 @@ export const trackedNumberParam = createTrackedParam({
   },
 });
 
-export { TrackedParamsLocation } from './location';
+export { TrackedParamsLocation } from './location.ts';

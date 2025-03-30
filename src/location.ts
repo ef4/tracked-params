@@ -1,5 +1,5 @@
 import type Location from '@ember/routing/location';
-import { TrackedParam, TrackedParamOpts } from './tracked-param';
+import { TrackedParam, TrackedParamOpts } from './tracked-param.ts';
 import { getOwner } from '@ember/application';
 import type { UpdateCallback } from '@ember/routing/location';
 
@@ -73,11 +73,11 @@ export class TrackedParamsLocation implements Location {
   activateParam<T>(
     key: string,
     initializer: (() => T) | undefined,
-    opts: TrackedParamOpts<T>
+    opts: TrackedParamOpts<T>,
   ): TrackedParam<T> {
     if (this.liveParams.has(key)) {
       throw new Error(
-        `multiple trackedSearchParam decorators are trying to control the search param "${key}"`
+        `multiple trackedSearchParam decorators are trying to control the search param "${key}"`,
       );
     }
 
@@ -108,7 +108,7 @@ export class TrackedParamsLocation implements Location {
       value,
       opts,
       () => this.writeSearchParams(),
-      (self) => this.removeParam(self)
+      (self) => this.removeParam(self),
     );
     this.liveParams.set(key, tp);
     this.replaceURL(url);
@@ -146,12 +146,12 @@ export class TrackedParamsLocation implements Location {
 const locations = new WeakMap<object, TrackedParamsLocation>();
 
 export function getLocation(
-  ownedObject: object
+  ownedObject: object,
 ): TrackedParamsLocation | undefined {
   let owner = getOwner(ownedObject);
   if (!owner) {
     throw new Error(
-      `trackedParams can only be used on objects that have an owner`
+      `trackedParams can only be used on objects that have an owner`,
     );
   }
   return locations.get(owner);
