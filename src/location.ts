@@ -1,5 +1,5 @@
 import type Location from '@ember/routing/location';
-import { TrackedParam, TrackedParamOpts } from './tracked-param.ts';
+import { TrackedParam, type TrackedParamOpts } from './tracked-param.ts';
 import { getOwner } from '@ember/application';
 import type { UpdateCallback } from '@ember/routing/location';
 

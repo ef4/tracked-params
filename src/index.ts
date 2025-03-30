@@ -1,6 +1,6 @@
 import { babelToTSDecorator } from './decorator-types.ts';
 import { getLocation } from './location.ts';
-import { TrackedParam, TrackedParamOpts } from './tracked-param.ts';
+import { TrackedParam, type TrackedParamOpts } from './tracked-param.ts';
 import { registerDestructor } from '@ember/destroyable';
 
 const trackedParams = new WeakMap<object, Map<string, TrackedParam<unknown>>>();
