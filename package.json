@@ -1,27 +1,119 @@
 {
   "name": "tracked-params",
-  "version": "0.0.0",
-  "private": true,
-  "repository": "",
+  "version": "0.0.1",
+  "description": "Synchronize state with the URL's searchParams",
+  "keywords": [
+    "ember-addon",
+    "query params",
+    "query",
+    "search",
+    "params",
+    "url",
+    "routing"
+  ],
+  "repository": "https://github.com/ef4/tracked-params",
   "license": "MIT",
-  "author": "",
+  "author": "Edward Faulkner <edward@eaf4.com>",
+  "exports": {
+    ".": {
+      "types": "./declarations/src/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./declarations/src/*.d.ts",
+      "default": "./dist/*.js"
+    },
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "declarations/src/*"
+      ]
+    }
+  },
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist"
+  ],
   "scripts": {
-    "build": "pnpm --filter tracked-params build",
-    "lint": "pnpm --filter '*' lint",
-    "lint:fix": "pnpm --filter '*' lint:fix",
-    "prepare": "pnpm build",
-    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "pnpm --filter tracked-params start --no-watch.clearScreen",
-    "start:test-app": "pnpm --filter test-app start",
-    "test": "pnpm --filter '*' test"
+    "build": "rollup --config",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --check",
+    "lint:format:fix": "prettier . --write",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "glint",
+    "prepack": "rollup --config",
+    "start": "vite dev",
+    "test": "vite build --mode=development && testem --file testem.js ci"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.9",
+    "decorator-transforms": "^2.2.2"
   },
   "devDependencies": {
-    "concurrently": "^7.2.1",
-    "prettier": "^2.5.1"
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/plugin-transform-typescript": "^7.25.2",
+    "@babel/runtime": "^7.25.6",
+    "@ember/test-helpers": "^5.1.0",
+    "@embroider/addon-dev": "^7.1.0",
+    "@embroider/core": "^4.0.0-alpha.6",
+    "@embroider/macros": "1.17.0-alpha.7",
+    "@embroider/vite": "^1.0.0-alpha.7 ",
+    "@eslint/js": "^9.17.0",
+    "@glimmer/component": "^2.0.0",
+    "@glint/core": "^1.4.0",
+    "@glint/environment-ember-loose": "^1.4.0",
+    "@glint/environment-ember-template-imports": "^1.4.0",
+    "@glint/template": "^1.4.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@tsconfig/ember": "^3.0.8",
+    "@types/luxon": "^3.4.2",
+    "@types/qunit": "^2.19.12",
+    "babel-plugin-ember-template-compilation": "^2.2.5",
+    "concurrently": "^9.0.1",
+    "ember-qunit": "^9.0.1",
+    "ember-resolver": "^13.1.0",
+    "ember-source": "^6.3.0",
+    "ember-template-lint": "^6.0.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ember": "^12.3.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-qunit": "^8.1.2",
+    "globals": "^15.14.0",
+    "luxon": "^3.6.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-ember-template-tag": "^2.0.4",
+    "qunit": "^2.24.1",
+    "qunit-dom": "^3.4.0",
+    "release-plan": "^0.16.0",
+    "rollup": "^4.22.5",
+    "testem": "^3.15.2",
+    "tracked-built-ins": "^4.0.0",
+    "typescript": "~5.6.0",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^5.0.9"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "^7.0.0"
+  "packageManager": "pnpm@10.4.1",
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./locations/tracked-params-hash.js": "./dist/_app_/locations/tracked-params-hash.js",
+      "./locations/tracked-params-history.js": "./dist/_app_/locations/tracked-params-history.js",
+      "./locations/tracked-params-none.js": "./dist/_app_/locations/tracked-params-none.js"
     }
   }
 }

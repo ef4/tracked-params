@@ -1,18 +1,15 @@
 {
   "schemaVersion": "1.0.0",
+  "projectName": "memory-scroll",
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "1.5.0",
+      "version": "4.1.1",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",
           "isBaseBlueprint": true,
-          "options": [
-            "--pnpm",
-            "--ci-provider=github",
-            "--typescript"
-          ]
+          "options": ["--ci-provider=github", "--pnpm", "--typescript"]
         }
       ]
     }

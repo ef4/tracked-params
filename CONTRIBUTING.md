@@ -3,7 +3,7 @@
 ## Installation
 
 - `git clone <repository-url>`
-- `cd tracked-params`
+- `cd memory-scroll`
 - `pnpm install`
 
 ## Linting
@@ -13,7 +13,7 @@
 
 ## Building the addon
 
-- `cd tracked-params`
+- `cd .`
 - `pnpm build`
 
 ## Running tests
