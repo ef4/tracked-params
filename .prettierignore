@@ -1,3 +1,9 @@
+# bug workaround: https://github.com/ember-tooling/prettier-plugin-ember-template-tag/pull/341
+tests/app/templates/application.gts
+tests/app/templates/first.gts
+tests/app/templates/index.gts
+tests/app/templates/second.gts
+
 # unconventional js
 /blueprints/*/files/
 
