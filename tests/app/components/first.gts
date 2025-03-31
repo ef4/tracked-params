@@ -7,8 +7,8 @@ export default class Example extends Component {
   @trackedParam q = '';
   @trackedNumberParam count = 42;
 
-  updateCount = (event: any) => {
-    this.count = Number(event.target.value);
+  updateCount = (event: Event) => {
+    this.count = Number((event.target as HTMLInputElement).value);
   };
 
   <template>

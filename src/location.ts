@@ -1,6 +1,6 @@
 import type Location from '@ember/routing/location';
 import { TrackedParam, type TrackedParamOpts } from './tracked-param.ts';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import type { UpdateCallback } from '@ember/routing/location';
 
 export class TrackedParamsLocation implements Location {
@@ -84,33 +84,35 @@ export class TrackedParamsLocation implements Location {
     // guarantees that unclaimedParams is initialized
     let url = this.getURL();
 
-    let value: any;
+    let value: T;
 
     // here is where a newly-booted-up trackedQueryParam gets its initial value
     // from the URL, rather than its own initializer
     if (this.unclaimedParams?.has(key)) {
-      value = this.unclaimedParams.get(key)!;
-      if (opts.validate && !opts.validate(value)) {
+      let stringValue = this.unclaimedParams.get(key)!;
+      if (opts.validate && !opts.validate(stringValue)) {
         // failed validation means we're ignoring the preexisting value in the
         // URL as if it wasn't there.
-        value = initializer?.();
+        value = initializer?.() as T;
       } else {
         if (opts.deserialize) {
-          value = opts.deserialize(value);
+          value = opts.deserialize(stringValue);
+        } else {
+          value = stringValue as T;
         }
       }
       this.unclaimedParams.delete(key);
     } else {
-      value = initializer?.();
+      value = initializer?.() as T;
     }
 
     let tp = new TrackedParam(
       value,
       opts,
       () => this.writeSearchParams(),
-      (self) => this.removeParam(self),
+      (self) => this.removeParam(self as TrackedParam),
     );
-    this.liveParams.set(key, tp);
+    this.liveParams.set(key, tp as TrackedParam);
     this.replaceURL(url);
     return tp;
   }

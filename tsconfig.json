@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "include": ["src/**/*", "unpublished-development-types/**/*"],
+  "include": ["src/**/*", "unpublished-development-types/**/*", "tests/**/*"],
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
   },
@@ -28,18 +28,6 @@
     "noEmitOnError": false,
 
     /**
-      https://www.typescriptlang.org/tsconfig#rootDir
-      "Default: The longest common path of all non-declaration input files."
-
-      Because we want our declarations' structure to match our rollup output,
-      we need this "rootDir" to match the "srcDir" in the rollup.config.mjs.
-
-      This way, we can have simpler `package.json#exports` that matches
-      imports to files on disk
-    */
-    "rootDir": "./src",
-
-    /**
       https://www.typescriptlang.org/tsconfig#allowImportingTsExtensions
 
       We want our tooling to know how to resolve our custom files so the appropriate plugins
@@ -47,6 +35,6 @@
     */
     "allowImportingTsExtensions": true,
 
-    "types": ["ember-source/types"]
+    "types": ["ember-source/types", "vite/client"]
   }
 }

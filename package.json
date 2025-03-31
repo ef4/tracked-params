@@ -16,11 +16,11 @@
   "author": "Edward Faulkner <edward@eaf4.com>",
   "exports": {
     ".": {
-      "types": "./declarations/index.d.ts",
+      "types": "./declarations/src/index.d.ts",
       "default": "./dist/index.js"
     },
     "./*": {
-      "types": "./declarations/*.d.ts",
+      "types": "./declarations/src/*.d.ts",
       "default": "./dist/*.js"
     },
     "./addon-main.js": "./addon-main.cjs"
@@ -28,7 +28,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "declarations/*"
+        "declarations/src/*"
       ]
     }
   },
@@ -75,6 +75,7 @@
     "@glint/template": "^1.4.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.8",
+    "@types/luxon": "^3.4.2",
     "@types/qunit": "^2.19.12",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^9.0.1",

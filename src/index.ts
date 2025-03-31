@@ -47,7 +47,7 @@ function setupDecorator<T>(
     get() {
       return getTrackedParam(this).value;
     },
-    set(value: any) {
+    set(value: T) {
       return getTrackedParam(this).update(value);
     },
   };

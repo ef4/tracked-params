@@ -7,7 +7,7 @@ export class TrackedParam<T = unknown> {
     value: T,
     private opts: TrackedParamOpts<T>,
     private onChange?: () => void,
-    private onDestroy?: (tp: TrackedParam<T>) => void
+    private onDestroy?: (tp: TrackedParam<T>) => void,
   ) {
     this.internalValue = value;
   }

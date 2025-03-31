@@ -5,7 +5,7 @@
 export type BabelDecorator = (
   target: object,
   fieldName: string,
-  descriptor: PropertyDescriptor
+  descriptor: PropertyDescriptor,
 ) => PropertyDescriptor;
 
 export function babelToTSDecorator(fn: BabelDecorator): PropertyDecorator {
