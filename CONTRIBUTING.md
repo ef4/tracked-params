@@ -3,7 +3,7 @@
 ## Installation
 
 - `git clone <repository-url>`
-- `cd memory-scroll`
+- `cd tracked-params`
 - `pnpm install`
 
 ## Linting
@@ -13,18 +13,15 @@
 
 ## Building the addon
 
-- `cd .`
 - `pnpm build`
 
 ## Running tests
 
-- `cd test-app`
 - `pnpm test` – Runs the test suite on the current Ember version
 - `pnpm test:watch` – Runs the test suite in "watch mode"
 
 ## Running the test application
 
-- `cd test-app`
 - `pnpm start`
 - Visit the test application at [http://localhost:4200](http://localhost:4200).
 

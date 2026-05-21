@@ -3,7 +3,7 @@
 if (typeof module !== 'undefined') {
   module.exports = {
     test_page: 'tests/index.html?hidepassed',
-    cwd: 'dist',
+    cwd: 'dist-tests',
     disable_watching: true,
     launch_in_ci: ['Chrome'],
     launch_in_dev: ['Chrome'],
@@ -13,7 +13,7 @@ if (typeof module !== 'undefined') {
         ci: [
           // --no-sandbox is needed when running Chrome inside a container
           process.env.CI ? '--no-sandbox' : null,
-          '--headless',
+          '--headless=new',
           '--disable-dev-shm-usage',
           '--disable-software-rasterizer',
           '--mute-audio',

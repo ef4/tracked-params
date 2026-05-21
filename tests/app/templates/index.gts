@@ -5,4 +5,4 @@ import type { TemplateOnlyComponent } from '@ember/component/template-only';
   <h1>Home</h1>
 
   <LuxonExample />
-</template> satisfies TemplateOnlyComponent
+</template> satisfies TemplateOnlyComponent;
