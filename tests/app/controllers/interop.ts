@@ -7,6 +7,6 @@ export default class InteropController extends Controller {
   @tracked interop: string | undefined;
 
   update = () => {
-    this.interop += '!';
+    this.interop += 'more';
   };
 }

@@ -59,16 +59,13 @@ class TrackedParamsLocation implements Location {
   }
 
   setURL(url: string) {
-    this.#innerLocation.setURL(this.addSearchParams(url));
+    this.#innerLocation.setURL(this.routerToBrowser(url));
   }
 
-  private addSearchParams(url: string): string {
+  // convert from the format the ember router sees to the format the underlying
+  // Location sees.
+  private routerToBrowser(url: string): string {
     let u = new URL(url, window.location.href);
-    if (this.#unclaimedParams) {
-      for (let [k, v] of this.#unclaimedParams) {
-        u.searchParams.set(k, v);
-      }
-    }
     for (let [k, v] of this.#liveParams) {
       let serial = v.serializedValue;
       if (serial === '' && !v.showWhenEmpty) {
@@ -82,9 +79,9 @@ class TrackedParamsLocation implements Location {
 
   replaceURL(url: string) {
     if (this.#innerLocation.replaceURL) {
-      return this.#innerLocation.replaceURL(this.addSearchParams(url));
+      return this.#innerLocation.replaceURL(this.routerToBrowser(url));
     } else {
-      return this.#innerLocation.setURL(this.addSearchParams(url));
+      return this.#innerLocation.setURL(this.routerToBrowser(url));
     }
   }
 
@@ -93,7 +90,7 @@ class TrackedParamsLocation implements Location {
   }
 
   formatURL(url: string) {
-    return this.#innerLocation.formatURL(this.addSearchParams(url));
+    return this.#innerLocation.formatURL(this.routerToBrowser(url));
   }
 
   activateParam<T>(
