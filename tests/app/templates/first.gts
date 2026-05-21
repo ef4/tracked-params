@@ -1,7 +1,9 @@
 import First from '../components/first.gts';
-import type { TemplateOnlyComponent } from '@ember/component/template-only';
+import RouteTemplate from 'ember-route-template';
 
-<template>
-  <h1>First</h1>
-  <First />
-</template> satisfies TemplateOnlyComponent
+export default RouteTemplate(
+  <template>
+    <h1>First</h1>
+    <First />
+  </template>,
+);

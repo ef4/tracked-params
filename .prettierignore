@@ -1,27 +1,16 @@
-# bug workaround: https://github.com/ember-tooling/prettier-plugin-ember-template-tag/pull/341
-tests/app/templates/application.gts
-tests/app/templates/first.gts
-tests/app/templates/index.gts
-tests/app/templates/second.gts
-
 # unconventional js
 /blueprints/*/files/
 
 # compiled output
 /dist/
+/dist-*/
 /declarations/
 
 # misc
 /coverage/
- within a package
-
-# misc
-!.*
-.lint-todo/
-
-# ember-try
-/.node_modules.ember-try/
-/pnpm-lock.ember-try.yaml
+pnpm-lock.yaml
+config/ember-cli-update.json
 *.yaml
+*.yml
 *.md
-
+*.html
