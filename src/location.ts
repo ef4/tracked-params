@@ -4,7 +4,7 @@ import { getOwner } from '@ember/owner';
 import type { UpdateCallback } from '@ember/routing/location';
 import { setOwner } from '@ember/owner';
 import { service } from '@ember/service';
-import type TrackedParamsService from './service.ts';
+import type TrackedParamsService from './services/tracked-params.ts';
 
 export interface Config {
   innerLocationType?: string;
