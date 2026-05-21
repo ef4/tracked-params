@@ -20,8 +20,12 @@ export function buildApp({
       './router': { default: Router },
       './locations/tracked-none': NoneLocation,
       './locations/tracked-history': HistoryLocation,
-      ...import.meta.glob('./controllers/*.ts', { eager: true }),
-      ...import.meta.glob('./templates/*.gts', { eager: true }),
+      ...import.meta.glob(
+        ['./controllers/*.ts', './templates/*.gts', './services/*.ts'],
+        {
+          eager: true,
+        },
+      ),
     };
   }
 
