@@ -1,0 +1,22 @@
+{
+  "solution": {
+    "tracked-params": {
+      "impact": "minor",
+      "oldVersion": "0.0.1",
+      "newVersion": "0.1.0",
+      "tagName": "latest",
+      "constraints": [
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./package.json"
+    }
+  },
+  "description": "## Release (2026-05-22)\n\n* tracked-params 0.1.0 (minor)\n\n#### :rocket: Enhancement\n* `tracked-params`\n  * [#5](https://github.com/ef4/tracked-params/pull/5) Support interop with classic queryParams ([@ef4](https://github.com/ef4))\n\n#### :house: Internal\n* `tracked-params`\n  * [#6](https://github.com/ef4/tracked-params/pull/6) release-plan ([@ef4](https://github.com/ef4))\n  * [#4](https://github.com/ef4/tracked-params/pull/4) blueprint update ([@ef4](https://github.com/ef4))\n\n#### Committers: 1\n- Edward Faulkner ([@ef4](https://github.com/ef4))\n"
+}
