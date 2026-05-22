@@ -20,13 +20,19 @@ export function buildApp({
       './router': { default: Router },
       './locations/tracked-none': NoneLocation,
       './locations/tracked-history': HistoryLocation,
-      ...import.meta.glob('./templates/*.gts', { eager: true }),
+      ...import.meta.glob(
+        ['./controllers/*.ts', './templates/*.gts', './services/*.ts'],
+        {
+          eager: true,
+        },
+      ),
     };
   }
 
   Router.map(function () {
     this.route('first');
     this.route('second');
+    this.route('interop');
   });
 
   return TestApp;

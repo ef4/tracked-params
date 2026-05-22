@@ -2,48 +2,71 @@ import type Location from '@ember/routing/location';
 import { TrackedParam, type TrackedParamOpts } from './tracked-param.ts';
 import { getOwner } from '@ember/owner';
 import type { UpdateCallback } from '@ember/routing/location';
+import { setOwner } from '@ember/owner';
+import { service } from '@ember/service';
+import type TrackedParamsService from './services/tracked-params.ts';
 
-export class TrackedParamsLocation implements Location {
-  private innerLocation: Location;
+export interface Config {
+  innerLocationType?: string;
+}
 
+export function trackedParamsLocation(config: Config = {}) {
+  return {
+    create(owning: object): Location {
+      return new TrackedParamsLocation(owning, config);
+    },
+  };
+}
+
+class TrackedParamsLocation implements Location {
+  #innerLocation: Location;
   // as we initialize, we will read all the search params out of the URL. They
   // start out unclaimed, meaning they are not bound to any consumer.
-  private unclaimedParams: Map<string, string> | undefined;
+  #unclaimedParams: Map<string, string> | undefined;
 
-  private liveParams: Map<string, TrackedParam> = new Map();
+  #liveParams: Map<string, TrackedParam> = new Map();
 
-  constructor(owning: object, innerLocationType: string) {
+  constructor(owning: object, config: Config = {}) {
     let owner = getOwner(owning);
     if (!owner) {
       throw new Error(`bug: TrackedParamsLocation expected to find an owner`);
     }
-    this.innerLocation = owner.lookup(`location:${innerLocationType}`)!;
+    setOwner(this, owner);
+    this.#innerLocation = owner.lookup(
+      `location:${config.innerLocationType ?? 'history'}`,
+    )!;
     locations.set(owner, this);
   }
 
+  @service declare trackedParams: TrackedParamsService;
+
   getURL() {
-    let realURL = this.innerLocation.getURL();
+    let realURL = this.#innerLocation.getURL();
     let u = new URL(realURL, window.location.href);
-    if (!this.unclaimedParams) {
+    if (!this.#unclaimedParams) {
       // it's during the first getURL that we take initial values from the
       // actual URL bar. After that point, we are driving the state.
-      this.unclaimedParams = new Map([...u.searchParams]);
+      this.#unclaimedParams = new Map([...u.searchParams]);
     }
-    return u.pathname;
+
+    let passthrough = new URL(u.pathname, window.location.href);
+    for (let [k, v] of this.#unclaimedParams) {
+      if (this.trackedParams.ignored.includes(k)) {
+        passthrough.searchParams.set(k, v);
+      }
+    }
+    return passthrough.pathname + passthrough.search;
   }
 
   setURL(url: string) {
-    this.innerLocation.setURL(this.addSearchParams(url));
+    this.#innerLocation.setURL(this.routerToBrowser(url));
   }
 
-  private addSearchParams(url: string): string {
+  // convert from the format the ember router sees to the format the underlying
+  // Location sees.
+  private routerToBrowser(url: string): string {
     let u = new URL(url, window.location.href);
-    if (this.unclaimedParams) {
-      for (let [k, v] of this.unclaimedParams) {
-        u.searchParams.set(k, v);
-      }
-    }
-    for (let [k, v] of this.liveParams) {
+    for (let [k, v] of this.#liveParams) {
       let serial = v.serializedValue;
       if (serial === '' && !v.showWhenEmpty) {
         u.searchParams.delete(k);
@@ -55,19 +78,19 @@ export class TrackedParamsLocation implements Location {
   }
 
   replaceURL(url: string) {
-    if (this.innerLocation.replaceURL) {
-      return this.innerLocation.replaceURL(this.addSearchParams(url));
+    if (this.#innerLocation.replaceURL) {
+      return this.#innerLocation.replaceURL(this.routerToBrowser(url));
     } else {
-      return this.innerLocation.setURL(this.addSearchParams(url));
+      return this.#innerLocation.setURL(this.routerToBrowser(url));
     }
   }
 
   onUpdateURL(callback: UpdateCallback): void {
-    this.innerLocation.onUpdateURL(callback);
+    this.#innerLocation.onUpdateURL(callback);
   }
 
   formatURL(url: string) {
-    return this.innerLocation.formatURL(this.addSearchParams(url));
+    return this.#innerLocation.formatURL(this.routerToBrowser(url));
   }
 
   activateParam<T>(
@@ -75,7 +98,7 @@ export class TrackedParamsLocation implements Location {
     initializer: (() => T) | undefined,
     opts: TrackedParamOpts<T>,
   ): TrackedParam<T> {
-    if (this.liveParams.has(key)) {
+    if (this.#liveParams.has(key)) {
       throw new Error(
         `multiple trackedSearchParam decorators are trying to control the search param "${key}"`,
       );
@@ -88,8 +111,8 @@ export class TrackedParamsLocation implements Location {
 
     // here is where a newly-booted-up trackedQueryParam gets its initial value
     // from the URL, rather than its own initializer
-    if (this.unclaimedParams?.has(key)) {
-      let stringValue = this.unclaimedParams.get(key)!;
+    if (this.#unclaimedParams?.has(key)) {
+      let stringValue = this.#unclaimedParams.get(key)!;
       if (opts.validate && !opts.validate(stringValue)) {
         // failed validation means we're ignoring the preexisting value in the
         // URL as if it wasn't there.
@@ -101,7 +124,7 @@ export class TrackedParamsLocation implements Location {
           value = stringValue as T;
         }
       }
-      this.unclaimedParams.delete(key);
+      this.#unclaimedParams.delete(key);
     } else {
       value = initializer?.() as T;
     }
@@ -112,15 +135,15 @@ export class TrackedParamsLocation implements Location {
       () => this.writeSearchParams(),
       (self) => this.removeParam(self as TrackedParam),
     );
-    this.liveParams.set(key, tp as TrackedParam);
+    this.#liveParams.set(key, tp as TrackedParam);
     this.replaceURL(url);
     return tp;
   }
 
   private removeParam(tp: TrackedParam) {
-    for (let [k, v] of this.liveParams) {
+    for (let [k, v] of this.#liveParams) {
       if (v === tp) {
-        this.liveParams.delete(k);
+        this.#liveParams.delete(k);
       }
     }
     this.writeSearchParams();
@@ -131,17 +154,17 @@ export class TrackedParamsLocation implements Location {
   }
 
   get cancelRouterSetup() {
-    return this.innerLocation.cancelRouterSetup;
+    return this.#innerLocation.cancelRouterSetup;
   }
 
   initState() {
-    if (this.innerLocation.initState) {
-      this.innerLocation.initState();
+    if (this.#innerLocation.initState) {
+      this.#innerLocation.initState();
     }
   }
 
   destroy() {
-    this.innerLocation.destroy();
+    this.#innerLocation.destroy();
   }
 }
 

@@ -97,4 +97,5 @@ export const trackedNumberParam = createTrackedParam({
   },
 });
 
-export { TrackedParamsLocation } from './location.ts';
+export { trackedParamsLocation, type Config } from './location.ts';
+export { default as TrackedParamsService } from './services/tracked-params.ts';

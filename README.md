@@ -121,19 +121,38 @@ If you _don't_ use one of our provided locationTypes, `trackedParam` doesn't err
 If you already have a custom Location for unrelated reasons, our implementation composes around any existing Location, not just the three Ember built-in ones. For example, if you already have `app/locations/custom.js`, you can create `app/locations/tracked-params-custom.js` like this:
 
 ```js
-import { TrackedParamsLocation } from 'tracked-params';
-export default {
-  create(owning) {
-    return new TrackedParamsLocation(owning, 'custom');
-  },
-};
+import { trackedParamsLocation } from 'tracked-params';
+export default trackedParamsLocation({ innerLocationType: 'custom' })
 ```
 
 And then change your `locationType` from `custom` to `tracked-params-custom`.
 
+### Interoperability with Traditional Query Params
+
+You can mix traditional queryParams with tracked-params. To do so, you need to tell tracked-params to ignore all the queryParams that you want to be left the traditional way.
+
+To provide config, extend the TrackedParamsService:
+
+```ts
+// app/services/tracked-params.ts
+import { TrackedParamsService } from 'tracked-params';
+
+export default class extends TrackedParamsService {
+  ignored = [
+    'list',
+    'yourOld',
+    'queryParams',
+    'here'
+  ];
+}
+
+```
+
 ### What's historySupportMiddleware?
 
 Our installation instructions tell you to set `historySupportMiddleware`. This is needed when you're using `locationType: 'tracked-params-history'` because we want ember-cli's development web server to serve the app at all deeply nested URLs (just like it would if we kept using the `'history'` locationType), and by default it will only do that if it sees `locationType === 'history'`.
+
+This is only necessary when using ember-cli, if you're using Vite it doesn't matter.
 
 ### Testing
 

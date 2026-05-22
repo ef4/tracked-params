@@ -1,7 +1,3 @@
-import { TrackedParamsLocation } from '../index.ts';
+import { trackedParamsLocation } from '../location.ts';
 
-export default {
-  create(owning: object): TrackedParamsLocation {
-    return new TrackedParamsLocation(owning, 'none');
-  },
-};
+export default trackedParamsLocation({ innerLocationType: 'none' });
