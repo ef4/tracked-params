@@ -1,0 +1,1 @@
+{"version":3,"file":"decorator-types.d.ts","sourceRoot":"","sources":["../src/decorator-types.ts"],"names":[],"mappings":"AAIA,MAAM,MAAM,cAAc,GAAG,CAC3B,MAAM,EAAE,MAAM,EACd,SAAS,EAAE,MAAM,EACjB,UAAU,EAAE,kBAAkB,KAC3B,kBAAkB,CAAC;AAExB,wBAAgB,kBAAkB,CAAC,EAAE,EAAE,cAAc,GAAG,iBAAiB,CAExE"}
